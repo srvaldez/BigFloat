@@ -16,7 +16,9 @@ Extern "c"
 	Declare Function __builtin_umulll_overflow (Byval As Ulongint, Byval As Ulongint, Byref As Ulongint) As Boolean
 End Extern
 
-Const NUMBER_OF_DIGITS = 128
+#Ifndef NUMBER_OF_DIGITS
+	Const NUMBER_OF_DIGITS = 128
+#Endif
                         
 Const NUMBER_OF_BITS   =  NUMBER_OF_DIGITS*3.321928094887362
 
@@ -1768,13 +1770,13 @@ Function str2fp(Byref x As String) As BigFloat_struct
 		z=fpmul_ui(z, ten)
 		z=fpadd(z,y)
 	Wend
-	i=len(strin)
-	if i>0 then
+	i=Len(strin)
+	If i>0 Then
 		ten=Valuint("1"+String(i,"0"))
 		y=ui2fp(Valuint(strin))
 		z=fpmul_ui(z, ten)
 		z=fpadd(z,y)
-	end if
+	End If
 	pw=ui2fp(10)
 	pw=fpipow(pw,strlen-ex-1)
 	z=fpdiv(z, pw)
@@ -2531,9 +2533,9 @@ Function fpexp (Byref x As BigFloat_struct, Byval dwords As Long=NUM_DWORDS) As 
     For i=1 To 13
 		accum=fpmul(accum, accum, dwords)
 	Next
-	if sign<>0 then
+	If sign<>0 Then
 		accum=fpdiv(one, accum, dwords)
-	end if
+	End If
     Return accum
 End Function
 
