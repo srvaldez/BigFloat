@@ -2157,7 +2157,7 @@ Operator decfloat.Let ( Byval rhs As Double )
 End Operator
 
 Operator decfloat.cast ( ) As String
-	Operator = fp2str(this)
+	Operator = fp2str_exp(this.Dec_Num, fp_print_precision)
 End Operator
 
 Operator decfloat.cast ( ) As Long
