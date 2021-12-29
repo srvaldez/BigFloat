@@ -13,4 +13,5 @@ Arbitrary Precision Arithmetic https://www.youtube.com/playlist?list=PLGI5yUFVsU
 
 Git repo https://github.com/nickelcarbide/arbitrary-precision-arithmetic-demo
 
+BigInteger by Richard/Stephan
 https://github.com/stephanbrunker/big_integer
