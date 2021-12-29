@@ -12,3 +12,5 @@ Arithmetic Operations Beyond Floating Point Number Precision https://ia800403.us
 Arbitrary Precision Arithmetic https://www.youtube.com/playlist?list=PLGI5yUFVsUkWO26oPixUNYwKick1LxiWR
 
 Git repo https://github.com/nickelcarbide/arbitrary-precision-arithmetic-demo
+
+https://github.com/stephanbrunker/big_integer
