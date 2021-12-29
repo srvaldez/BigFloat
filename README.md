@@ -15,3 +15,5 @@ Git repo https://github.com/nickelcarbide/arbitrary-precision-arithmetic-demo
 
 BigInteger by Richard/Stephan
 https://github.com/stephanbrunker/big_integer
+
+if you are interested in FreeBASIC please wisit their forum https://www.freebasic.net/forum/
