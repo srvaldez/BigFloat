@@ -1,5 +1,5 @@
 Const NUMBER_OF_DIGITS = 64
-#Include "BigFloat.bi"
+#Include "BigFloat-b.bi"
 
 'op_stack used by eval
 Redim Shared op_stack ( 10 ) As Zstring*6
@@ -126,6 +126,8 @@ Sub expon
    While char = "^"
       scan
       gamma
+'' if you don't want the ^ operator to have right-associativity then commene-out the next line
+      if char = "^" then expon
       rhs_value = value_stack_pop ()
       lhs_value = value_stack_pop ()
       value_stack_push ( lhs_value ^ rhs_value )
