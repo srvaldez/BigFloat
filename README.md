@@ -5,8 +5,6 @@ here are some of my codes in FB
 
 A Multiple-Precision Division Algorithm http://dmsmith.lmu.build/MComp1996.pdf
 
-Fast Recursive Division https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.47.565&rep=rep1&type=pdf
-
 Simple Algorithm for Arbitrary-Precision Integer Division https://youtu.be/6bpLYxk9TUQ
 
 Arithmetic Operations Beyond Floating Point Number Precision https://ia800403.us.archive.org/10/items/arxiv-1009.5911/1009.5911.pdf
