@@ -9,8 +9,6 @@ Simple Algorithm for Arbitrary-Precision Integer Division https://youtu.be/6bpLY
 
 Arithmetic Operations Beyond Floating Point Number Precision https://ia800403.us.archive.org/10/items/arxiv-1009.5911/1009.5911.pdf
 
-Arbitrary Precision Arithmetic https://www.youtube.com/playlist?list=PLGI5yUFVsUkWO26oPixUNYwKick1LxiWR
-
 Git repo https://github.com/nickelcarbide/arbitrary-precision-arithmetic-demo
 
 BigInteger by Richard/Stephan
