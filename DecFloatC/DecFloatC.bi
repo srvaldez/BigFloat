@@ -10,7 +10,7 @@ type DecFloat_struct
 	Declare Destructor ( )
 	Declare Operator Let ( Byref rhs As DecFloat_struct )
 	as long sign
-	as ulong exponent
+	as long exponent
 	as ulong ptr mantissa
 end type 
 
