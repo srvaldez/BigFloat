@@ -4,8 +4,6 @@
 	#inclib "DecFloatC32"
 #endif
 
-#inclib "DecFloatC"
-
 type DecFloat_struct
 	Declare Constructor ( )
 	Declare Constructor ( Byref rhs As DecFloat_struct )
