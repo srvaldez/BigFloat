@@ -5,7 +5,6 @@ const dec_float_digits_precision = 64
 Const order=16
 Dim As Decfloat z1, z2
 
-'<<< must use redim for shared variables to avoid heap corruption
 Dim Shared As Decfloat roots(order), weights(order), legcoef(order, order)
 Dim As Double tm, t
 dim as integer i, ex, n
