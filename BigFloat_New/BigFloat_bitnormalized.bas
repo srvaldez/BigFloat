@@ -3689,3 +3689,13 @@ Function fpExp(Byref x As BigFloat_t) As BigFloat_t
 
 End Function
 
+Function fpSqr(Byref x As BigFloat_t) As BigFloat_t
+
+    Dim As BigFloat_t result
+
+    BigFloat_Sqrt result.BigNum, x.BigNum
+
+    Return result
+
+End Function
+
