@@ -66,7 +66,7 @@ Function strn(x As BigFloat_t, Byval digits As Long) As String
 	If c>0 Then
 		se=Mid(s, c)
 	End If
-	Return Left(s, 42)+se
+	Return Left(s, digits)+se
 End Function
 		
 Dim As BigFloat_t x, y, z
