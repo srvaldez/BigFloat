@@ -252,7 +252,7 @@ Dim As BigFloat_t x, y, z
 Dim As Long i, c
 Dim As String s, se
 	gauss_leg_rule(N, Xi(), Wi())
-	Print "   Gauss-Legendre ',N,' Quuadrature rule"
+	Print "   Gauss-Legendre degree ";N;" Quuadrature rule"
 	Print "                    Xi                                             Wi"
 	For i=1 To N
 		Print strn(Xi(i), 42), strn(Wi(i), 42)
