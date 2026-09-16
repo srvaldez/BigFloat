@@ -3510,3 +3510,182 @@ function fpCoss(byref z as BigFloat_t) as BigFloat_t
 	return sn
 end function
 
+Sub BigFloat_Exp(Byref Result As BigFloat, Byref X As BigFloat)
+
+    Dim As BigFloat xx
+    Dim As BigFloat q
+    Dim As BigFloat qround
+    Dim As BigFloat half
+    Dim As BigFloat kfp
+    Dim As BigFloat r
+
+    Dim As BigFloat term
+    Dim As BigFloat sum
+    Dim As BigFloat oldsum
+    Dim As BigFloat tmp
+
+    Dim As Longint k
+    Dim As Longint newExp
+    Dim As Ulongint n
+    Dim As Long i, maxn = Clng((SIG_LEN * 2.4082399653118495))
+
+    ' ----------------------------------------------------------
+    ' Special cases
+    ' ----------------------------------------------------------
+    If IsNaN_F(X) Then
+        BigFloat_SetNaN Result
+        Exit Sub
+    End If
+
+    If IsZero_F(X) Then
+        BigFloat_FromLong Result, 1
+        Exit Sub
+    End If
+
+    ' Alias safety.
+    BigFloat_Assign xx, X
+
+
+    ' ----------------------------------------------------------
+    ' q = x / ln(2)
+    ' ----------------------------------------------------------
+    BigFloat_Divide q, xx, fpln2.BigNum
+
+
+    ' ----------------------------------------------------------
+    ' k = nearest integer(x / ln(2))
+    ' ----------------------------------------------------------
+    BigFloat_Pow2 half, -1      ' 0.5 exactly
+
+    If IsNeg_F(q) Then
+        BigFloat_Subtract qround, q, half
+    Else
+        BigFloat_Add qround, q, half
+    End If
+
+    BigFloat_Truncate qround, qround
+
+    If BigFloat_ToLongInt(qround, k) = False Then
+
+        If IsNeg_F(xx) Then
+            BigFloat_Clear Result
+        Else
+            BigFloat_SetNaN Result
+        End If
+
+        Exit Sub
+    End If
+
+
+    ' ----------------------------------------------------------
+    ' r = x - k*ln(2)
+    '
+    ' Therefore:
+    '
+    '     |r| <= ln(2)/2
+    ' ----------------------------------------------------------
+    BigFloat_FromLongInt kfp, k
+
+    BigFloat_Multiply tmp, fpln2.BigNum, kfp
+    BigFloat_Subtract r, xx, tmp
+
+
+    ' ----------------------------------------------------------
+    ' Additional range reduction:
+    '
+    '     exp(r) = exp(r/16)^16
+    '
+    ' Since 16 = 2^4:
+    '
+    '     exp(r) =
+    '         ((((exp(r/16))^2)^2)^2)^2)
+    '
+    ' Now:
+    '
+    '     |r/16| <= ln(2)/32
+    '            ~= 0.02166084939
+    '
+    ' which makes the Taylor series converge very rapidly.
+    ' ----------------------------------------------------------
+
+    r.exponent -= 4
+
+
+    ' ----------------------------------------------------------
+    ' Taylor series for exp(r/16)
+    '
+    '     sum  = 1
+    '     term = 1
+    '
+    '     term(n) = term(n-1) * r / n
+    '
+    ' Stop when the next term no longer changes the rounded
+    ' BigFloat result.
+    ' ----------------------------------------------------------
+    BigFloat_FromLong sum, 1
+    BigFloat_FromLong term, 1
+
+    n = 1
+
+    Do
+
+        BigFloat_Multiply tmp, term, r
+        BigFloat_DivideU64 term, tmp, n
+
+        BigFloat_Assign oldsum, sum
+        BigFloat_Add sum, sum, term
+
+        If BigFloat_Compare(sum, oldsum) = 0 Then Exit Do
+
+        n += 1
+
+        ' Defensive limit only.
+        If n > maxn Then Exit Do
+
+    Loop
+
+    ' ----------------------------------------------------------
+    ' Undo reduction:
+    '
+    '     exp(r) = exp(r/16)^16
+    '
+    ' Four squarings.
+    ' ----------------------------------------------------------
+    For i = 1 To 4
+        BigFloat_Multiply tmp, sum, sum
+        BigFloat_Assign sum, tmp
+    Next
+
+
+    ' ----------------------------------------------------------
+    ' exp(x) = exp(r) * 2^k
+    '
+    ' Multiplication by 2^k is exact in the new representation.
+    ' ----------------------------------------------------------
+    newExp = Clngint(sum.exponent) + k
+
+    If newExp > 2147483647LL Then
+        BigFloat_SetNaN Result
+        Exit Sub
+    End If
+
+    If newExp < -2147483648LL Then
+        BigFloat_Clear Result
+        Exit Sub
+    End If
+
+    BigFloat_Assign Result, sum
+    Result.exponent = Clng(newExp)
+
+End Sub
+
+Function fpExp(Byref x As BigFloat_t) As BigFloat_t
+
+    Dim As BigFloat_t result
+
+    BigFloat_Exp result.BigNum, x.BigNum
+
+    Return result
+
+End Function
+
