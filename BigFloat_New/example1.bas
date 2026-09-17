@@ -38,16 +38,15 @@ Const N As Long = 16
 Dim Shared As BigFloat_t Xi(N)
 Dim Shared As BigFloat_t Wi(N)
 
-Function LegInt(fun as function (X As BigFloat_t) As BigFloat_t, A As BigFloat_t, B As BigFloat_t) As BigFloat_t
+Function LegInt(Fun as function (X As BigFloat_t) As BigFloat_t, A As BigFloat_t, B As BigFloat_t) As BigFloat_t
 	Dim As Long I
 	Dim As BigFloat_t C1, C2, Result
-	Dim f as function (X As BigFloat_t) As BigFloat_t = Fun
 	
 	C1 = (B-A)/2
 	C2 = (B+A)/2
 	Result = 0
 	For I = 1 To N
-		Result = Result + Wi(I) * F(C1*XI(I) + C2)
+		Result = Result + Wi(I) * Fun(C1*XI(I) + C2)
 	Next
 	Result = C1 * Result
 	Return Result
